@@ -1,19 +1,20 @@
 # AI Embedding Project
 
-This project demonstrates how to generate text embeddings using OpenAI's API. Text embeddings are numerical representations of text that can be used for various machine learning tasks, such as clustering, similarity search, and classification.
+This project demonstrates how to generate embeddings for text data using OpenAI's API and store them in a Supabase database.
 
 ## Features
 
--   Generates embeddings for a list of text inputs.
--   Uses the `text-embedding-ada-002` model from OpenAI (because it's cheap).
--   Outputs the embedding data for each text input.
+-   Generate text embeddings using the `text-embedding-ada-002` model.
+-   Store embeddings and their corresponding text in a Supabase database.
+-   Process multiple text chunks in parallel.
 
 ## Prerequisites
 
 -   Node.js installed on your system.
 -   An OpenAI API key.
+-   A Supabase project with a `documents` table.
 
-## Installation
+## Setup
 
 1. Clone the repository:
     ```bash
@@ -24,9 +25,25 @@ This project demonstrates how to generate text embeddings using OpenAI's API. Te
     cd ai_embedding
     ```
 3. Install dependencies using Vite:
+
     ```bash
     npm install
     ```
+
+4. Configure the project:
+
+    - Create a `config.js` file exporting `openai` and `supabase` instances.
+    - Ensure the `documents` table in Supabase has the following structure:
+        ```sql
+        CREATE TABLE documents (
+          id SERIAL PRIMARY KEY,
+          context TEXT NOT NULL,
+          embedding FLOAT8[] NOT NULL
+        );
+        ```
+
+5. Add your content:
+    - Update the `content.js` file with the text chunks you want to process.
 
 ## Usage
 
@@ -35,15 +52,15 @@ This project demonstrates how to generate text embeddings using OpenAI's API. Te
     VITE_OPENAI_API_KEY=<your api key>
     ```
 2. Start the development server with Vite:
-    ```bash
-    npm run dev
-    ```
-3. The script will output the embeddings for the predefined text inputs.
 
-## File Structure
+```bash
+node index.js
+```
 
--   `index.js`: Main script to generate embeddings.
--   `config.js`: Configuration file for OpenAI API setup.
+## Notes
+
+-   Ensure your OpenAI and Supabase credentials are correctly configured in `env.js`.
+-   Modify the `content.js` file to include your desired text data.
 
 ## License
 
