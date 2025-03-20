@@ -21,6 +21,8 @@ const main = async (input) => {
         };
         console.log(data);
     });
+
+    console.log("Embedding complete!");
 };
 
 main(content);
